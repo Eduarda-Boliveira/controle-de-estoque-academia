@@ -10,11 +10,12 @@ import {
   Query,
   HttpCode,
   HttpStatus,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ProductService } from '../services';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
-import { Product, ProductCategory } from '../entities/product.entity';
+import { Product } from '../entities/product.entity';
 
 @Controller('products')
 export class ProductController {
@@ -28,14 +29,9 @@ export class ProductController {
 
   @Get()
   async findAll(
-    @Query('category') category?: ProductCategory,
     @Query('search') search?: string,
   ): Promise<Product[]> {
     const filters: any = {};
-    
-    if (category) {
-      filters.category = category;
-    }
     
     if (search) {
       filters.search = search;
@@ -45,13 +41,13 @@ export class ProductController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Product> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Product> {
     return this.productService.findById(id);
   }
 
   @Put(':id')
   async replace(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() createProductDto: CreateProductDto,
   ): Promise<Product> {
     return this.productService.update(id, createProductDto);
@@ -59,7 +55,7 @@ export class ProductController {
 
   @Patch(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateProductDto: UpdateProductDto,
   ): Promise<Product> {
     return this.productService.update(id, updateProductDto);
@@ -67,7 +63,7 @@ export class ProductController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.productService.remove(id);
   }
 }

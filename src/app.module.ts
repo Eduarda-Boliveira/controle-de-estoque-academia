@@ -1,18 +1,13 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from './products/products.module';
+import { PrismaService } from './prisma';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'better-sqlite3',
-      database: 'database.sqlite',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, // Em produção, usar migrations
-    }),
     ProductsModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [PrismaService],
+  exports: [PrismaService],
 })
 export class AppModule {}

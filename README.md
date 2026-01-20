@@ -18,7 +18,7 @@ Sistema de controle de estoque para academia desenvolvido em NestJS.
 - NestJS
 - TypeScript
 - TypeORM
-- SQLite
+- PostgreSQL
 - Class Validator
 - Class Transformer
 

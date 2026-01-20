@@ -2,7 +2,7 @@
 
 ## 🏗️ **Estrutura Geral do Projeto**
 
-Este é um sistema de controle de estoque para academia, desenvolvido com **NestJS** (backend) + **SQLite** (banco de dados) + **HTML/CSS/TypeScript** (frontend).
+Este é um sistema de controle de estoque para academia, desenvolvido com **NestJS** (backend) + **PostgreSQL** (banco de dados) + **HTML/CSS/TypeScript** (frontend).
 
 ---
 
@@ -10,7 +10,7 @@ Este é um sistema de controle de estoque para academia, desenvolvido com **Nest
 
 ### **package.json**
 - **Função**: Define as dependências, scripts e metadados do projeto
-- **Principais dependências**: NestJS, TypeORM, SQLite, Class-validator
+- **Principais dependências**: NestJS, TypeORM, PostgreSQL, Class-validator
 - **Scripts importantes**: `start:dev`, `build`, `seed`, `test`
 
 ### **tsconfig.json**
@@ -54,9 +54,9 @@ Este é um sistema de controle de estoque para academia, desenvolvido com **Nest
 ### **app.module.ts**
 ```typescript
 // MÓDULO RAIZ da aplicação
-- Importa TypeOrmModule (conexão com SQLite)
+- Importa TypeOrmModule (conexão com PostgreSQL)
 - Registra ProductsModule
-- Configura banco: database.sqlite, sincronização automática
+- Configura banco: PostgreSQL local, sincronização automática
 ```
 
 ### **test-api.ts**
@@ -104,7 +104,7 @@ Este é um sistema de controle de estoque para academia, desenvolvido com **Nest
 // CAMADA de acesso aos dados
 - Extends Repository<Product>
 - Métodos customizados de consulta
-- Abstrai queries complexas do SQLite
+- Abstrai queries complexas do PostgreSQL
 - Métodos: findLowStock, searchByName, etc.
 ```
 
@@ -258,18 +258,6 @@ Este é um sistema de controle de estoque para academia, desenvolvido com **Nest
 - Como instalar e executar
 - Tecnologias utilizadas
 - Funcionalidades principais
-```
-
----
-
-## 🧪 **Arquivo de Teste**
-
-### **migrate-to-postgres.js**
-```javascript
-// SCRIPT de migração SQLite → PostgreSQL
-- Conecta nos dois bancos
-- Copia estrutura e dados
-- Para integração com DBeaver
 ```
 
 ---

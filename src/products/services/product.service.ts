@@ -15,14 +15,7 @@ export class ProductService {
       throw new ConflictException(`Produto com nome "${createProductDto.name}" já existe`);
     }
 
-    // Definir valores padrão
-    const productData = {
-      ...createProductDto,
-      minStock: createProductDto.minStock || 5,
-      active: createProductDto.active !== undefined ? createProductDto.active : true,
-    };
-
-    const product = await this.productRepository.create(productData);
+    const product = await this.productRepository.create(createProductDto);
     return product;
   }
 
@@ -31,7 +24,7 @@ export class ProductService {
     return products;
   }
 
-  async findById(id: string): Promise<Product> {
+  async findById(id: number): Promise<Product> {
     const product = await this.productRepository.findById(id);
     if (!product) {
       throw new NotFoundException(`Produto com ID "${id}" não encontrado`);
@@ -39,7 +32,7 @@ export class ProductService {
     return product;
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto): Promise<Product> {
+  async update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
     const existingProduct = await this.productRepository.findById(id);
     if (!existingProduct) {
       throw new NotFoundException(`Produto com ID "${id}" não encontrado`);
@@ -54,10 +47,13 @@ export class ProductService {
     }
 
     const updatedProduct = await this.productRepository.update(id, updateProductDto);
+    if (!updatedProduct) {
+      throw new BadRequestException('Não foi possível atualizar o produto');
+    }
     return updatedProduct;
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: number): Promise<void> {
     const product = await this.productRepository.findById(id);
     if (!product) {
       throw new NotFoundException(`Produto com ID "${id}" não encontrado`);
@@ -67,9 +63,5 @@ export class ProductService {
     if (!deleted) {
       throw new BadRequestException('Não foi possível remover o produto');
     }
-  }
-
-  async getStockSummary() {
-    return this.productRepository.getStockSummary();
   }
 }
