@@ -69,4 +69,17 @@ export const productService = {
       throw error;
     }
   },
+
+  async sendReportByEmail(reportData: any, email: string): Promise<{ message: string }> {
+    try {
+      const response = await api.post('/send-report', {
+        ...reportData,
+        email,
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao enviar relatório por email:', error);
+      throw error;
+    }
+  },
 };

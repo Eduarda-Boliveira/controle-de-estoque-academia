@@ -16,10 +16,14 @@ import { ProductService } from '../services';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
 import { Product } from '../entities/product.entity';
+import { EmailService, ReportData } from '../../email';
 
 @Controller('products')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(
+    private readonly productService: ProductService,
+    private readonly emailService: EmailService,
+  ) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -28,16 +32,8 @@ export class ProductController {
   }
 
   @Get()
-  async findAll(
-    @Query('search') search?: string,
-  ): Promise<Product[]> {
-    const filters: any = {};
-    
-    if (search) {
-      filters.search = search;
-    }
-
-    return this.productService.findAll(Object.keys(filters).length > 0 ? filters : undefined);
+  async findAll(): Promise<Product[]> {
+    return this.productService.findAll();
   }
 
   @Get(':id')
@@ -65,5 +61,16 @@ export class ProductController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.productService.remove(id);
+  }
+
+  @Post('send-report')
+  @HttpCode(HttpStatus.OK)
+  async sendReport(@Body() reportData: ReportData & { email: string }): Promise<{ message: string }> {
+    try {
+      await this.emailService.sendReportEmail(reportData, reportData.email);
+      return { message: 'Relatório enviado com sucesso!' };
+    } catch (error) {
+      throw new Error('Falha ao enviar o relatório por email');
+    }
   }
 }

@@ -21,8 +21,8 @@ async function bootstrap() {
   });
 
   await app.listen(3000);
-  console.log('🚀 Servidor rodando na porta 3000');
-  console.log('📊 Sistema de Controle de Estoque - Academia');
+  console.log('Servidor rodando na porta 3000');
+  console.log(' Sistema de Controle de Estoque - Academia');
 }
 
 bootstrap();

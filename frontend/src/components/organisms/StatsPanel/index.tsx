@@ -95,7 +95,7 @@ export const StatsPanel: React.FC<StatsPanelProps> = ({
                 }
               }}
             >
-              Gerar Relatório
+              Gerar PDF
             </Button>
           </Box>
         )}

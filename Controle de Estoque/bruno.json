@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Controle de Estoque",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

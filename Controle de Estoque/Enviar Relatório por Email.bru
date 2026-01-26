@@ -1,0 +1,16 @@
+meta {
+  name: Enviar Relatório por Email
+  type: http
+  seq: 8
+}
+
+post {
+  url: http://localhost:3000/products/send-report
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

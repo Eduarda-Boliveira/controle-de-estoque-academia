@@ -24,7 +24,7 @@ services:
 
   # Aplicação NestJS
   app:
-    build: .
+    build: ./backend
     container_name: controle-estoque-app
     restart: unless-stopped
     depends_on:
@@ -32,6 +32,8 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql://eduarda:123456@postgres:5432/controle_estoque?schema=public
+      EMAIL_USER: aida14@ethereal.email
+      EMAIL_PASSWORD: cvEKe2EMUJQ29hz6zY
     ports:
       - "3000:3000"
     networks:
